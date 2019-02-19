@@ -49,7 +49,11 @@ class RandomRotate(object):
     def __call__(self, clip):
         angle = random.uniform(self.degrees[0], self.degrees[1])
         if isinstance(clip[0], np.ndarray):
-            rotated = [scipy.misc.imrotate(img, angle) for img in clip]
+            try:
+                rotated = [scipy.misc.imrotate(img, angle) for img in clip]
+            except:
+                print('here',img.shape)
+                
         elif isinstance(clip[0], PIL.Image.Image):
             rotated = [img.rotate(angle) for img in clip]
         else:
